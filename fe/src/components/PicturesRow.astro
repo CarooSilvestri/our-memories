@@ -1,0 +1,49 @@
+---
+import type { Dates } from "../models/memories.model";
+
+const { memory } = Astro.props;
+---
+
+<!-- Componente -->
+<div class="pb-4">
+	<p class="scroll-item">{memory.month.number}</p>
+	<hr class="border-5 border-primary w-full" />
+	<div class="flex gap-10">
+		<p class="w-40">{memory.month.label}</p>
+		<div class="gap-5 flex">
+			{
+				memory.dates.map((item: Dates) => (
+					<div>
+						<p>{item.day}</p>
+						<img src={item.img} alt={item.title} />
+					</div>
+				))
+			}
+		</div>
+	</div>
+</div>
+
+<!-- Script para animaciones con GSAP -->
+<script type="module">
+	import gsap from "gsap";
+	import ScrollTrigger from "gsap/ScrollTrigger";
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	// Animación para los elementos con la clase 'scroll-item'
+	gsap.fromTo(
+		".scroll-item",
+		{ opacity: 0, y: 50 },
+		{
+			opacity: 1,
+			y: 0,
+			duration: 1,
+			scrollTrigger: {
+				trigger: ".scroll-item", // el elemento que dispara la animación
+				start: "top 80%", // cuándo la animación empieza
+				end: "top 20%", // cuándo la animación termina
+				scrub: true, // para animación sincronizada con el scroll
+			},
+		}
+	);
+</script>

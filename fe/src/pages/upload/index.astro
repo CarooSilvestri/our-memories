@@ -1,0 +1,23 @@
+---
+import { uploadImage } from "../../services/service";
+
+let imageUrl = "";
+
+async function handleFileUpload(event) {
+	const file = event.target.files[0];
+	if (!file) return;
+
+	const filePath = await uploadImage(file);
+	const imageUrl = filePath; // Ahora se actualiza correctamente
+	console.log("Imagen subida:", imageUrl);
+}
+---
+
+<input
+	type="file"
+	accept="image/*"
+	required
+	onchange={(event) => handleFileUpload(event)}
+/>
+
+{imageUrl && <img src={imageUrl} alt="Imagen subida" />}

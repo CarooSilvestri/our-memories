@@ -1,0 +1,26 @@
+-> dejar todo acomodado para que el back pegandole a 
+
+/memo -> get que devuelva
+            {
+                month: "Enero",
+                number: "01"
+                dates: [{
+                    day:"1"
+                    title:"titulo"
+                    description: "esto es una desq"
+                    image: "http://image"
+                },
+                {
+                    day:"1"
+                    title:"titulo"
+                    description: "esto es una desq"
+                    image: "http://image"
+                }
+                ]
+            }
+
+/image -> ver quiero que suba imagenes al bucket que esta ahi, 
+para que despues las pueda mostrar en la web
+
+npm i 
+npm run dev
