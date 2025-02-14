@@ -1,23 +1,55 @@
 ---
-import { uploadImage } from "../../services/service";
-
-let imageUrl = "";
-
-async function handleFileUpload(event) {
-	const file = event.target.files[0];
-	if (!file) return;
-
-	const filePath = await uploadImage(file);
-	const imageUrl = filePath; // Ahora se actualiza correctamente
-	console.log("Imagen subida:", imageUrl);
-}
+import Layout from "../../layout/Layout.astro";
 ---
 
-<input
-	type="file"
-	accept="image/*"
-	required
-	onchange={(event) => handleFileUpload(event)}
-/>
+<Layout>
+	<section>
+		<form id="uploadForm">
+			<label for="file">Subir imagen:</label>
+			<input type="file" name="file" id="file" required />
+			<button type="submit">Subir</button>
+		</form>
+		<p id="status"></p>
+	</section>
 
-{imageUrl && <img src={imageUrl} alt="Imagen subida" />}
+	<script is:inline>
+		import { uploadImage } from "../../services/service";
+
+		// Asegurarse de que todo el DOM esté cargado antes de agregar el event listener
+		document.addEventListener("DOMContentLoaded", () => {
+			document
+				.querySelector("#uploadForm")
+				.addEventListener("submit", async (event) => {
+					event.preventDefault(); // Asegura que no se recargue la página
+
+					const fileInput = document.querySelector("#file");
+					const file = fileInput.files[0];
+
+					if (!file) {
+						document.querySelector("#status").textContent =
+							"No se seleccionó ningún archivo.";
+						return;
+					}
+
+					const formData = new FormData();
+					formData.append("file", file);
+
+					try {
+						const response = await uploadImage(file);
+
+						const data = await response.json();
+						if (response.ok) {
+							document.querySelector("#status").textContent =
+								"Imagen subida con éxito: " + data.filePath;
+						} else {
+							document.querySelector("#status").textContent =
+								"Error: " + data.error;
+						}
+					} catch (error) {
+						document.querySelector("#status").textContent =
+							"Error en la subida.";
+					}
+				});
+		});
+	</script>
+</Layout>

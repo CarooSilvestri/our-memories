@@ -1,8 +1,8 @@
-const API_URL = 'http://localhost:5001/memo'; // Cambia esto por la URL correcta de tu API si es otro puerto
+const API_URL = 'http://localhost:5001'; // Cambia esto por la URL correcta de tu API si es otro puerto
 
 export const getDailyMemories = async () => {
   try {
-    const response = await fetch(`${API_URL}`);
+    const response = await fetch(`${API_URL}/memo`);
     if (!response.ok) {
       throw new Error('Error al obtener los usuarios');
     }
@@ -14,21 +14,24 @@ export const getDailyMemories = async () => {
   }
 };
 
+// En tu servicio `uploadImage`
+export const uploadImage = async (file: File) => {
+  const formData = new FormData();
+  formData.append("file", file);
 
+  try {
+    const response = await fetch(`${API_URL}/upload`, {
+      method: "POST",
+      body: formData,
+    });
 
-export const uploadImage = async (event) =>{
-  const file = event.target.files[0];
-  if (!file) return;
+    if (!response.ok) {
+      throw new Error("Error al subir la imagen.");
+    }
 
-  const fileName = `${Date.now()}-${file.name}`; // Nombre único
-
-  const { data, error } = await supabase.storage
-    .from('images') // Nombre de tu bucket en Supabase
-    .upload(fileName, file);
-
-  if (error) {
-    console.error("Error al subir la imagen:", error);
-  } else {
-    console.log("Imagen subida con éxito:", data);
+    return await response.json(); // Devuelve el JSON ya procesado
+  } catch (error) {
+    console.error("Error en la subida:", error);
+    return null;
   }
-}
+};

@@ -1,8 +1,6 @@
 ---
-import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
+import Layout from "../layout/Layout.astro";
 import PicturesRow from "../components/PicturesRow.astro";
-import { TITLE, SITE_DESCRIPTION } from "../consts";
 
 import type { Memory } from "../models/memories.model";
 import { getDailyMemories } from "../services/service";
@@ -10,15 +8,6 @@ import { getDailyMemories } from "../services/service";
 const memories = await getDailyMemories();
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			{memories.map((memorie: Memory) => <PicturesRow memory={memorie} />)}
-		</main>
-	</body>
-</html>
+<Layout>
+	{memories.map((memorie: Memory) => <PicturesRow memory={memorie} />)}
+</Layout>

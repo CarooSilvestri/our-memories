@@ -46,11 +46,10 @@ export const getDailyMemories = async (req: Request, res: Response): Promise<voi
 
 export async function uploadImage(file: File) {
   if (!file) return null;
-
-  const fileName = `${Date.now()}-${file.name}`;
-
-  const { data, error } = await supabase.storage
-    .from('images') // Asegúrate de que el bucket existe en Supabase
+  const fileName = `${Date.now()}-${file.name}`
+  const { data, error } = await supabase
+    .storage
+    .from('images')
     .upload(fileName, file);
 
   if (error) {
@@ -58,7 +57,7 @@ export async function uploadImage(file: File) {
     return null;
   }
 
-  return data.path; // Retorna el path de la imagen
+  return data.path;
 }
 
 export async function getImageUrl(filePath: string) {
