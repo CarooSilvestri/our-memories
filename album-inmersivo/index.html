@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#c7d8d2"><meta name="description" content="Un viaje inmersivo por un año de recuerdos.">
+  <title>Nuestro año — una cápsula de recuerdos</title><link rel="stylesheet" href="styles.css">
+</head>
+<body class="locked">
+  <section class="intro" id="intro" aria-labelledby="introTitle">
+    <span class="intro-kicker">Nuestra cápsula del tiempo</span>
+    <h1 id="introTitle">Hay momentos que merecen volver a vivirse.</h1>
+    <button class="enter" id="enterButton" type="button"><span>Entrar</span><i aria-hidden="true">↘</i></button>
+    <span class="intro-year">2026</span>
+  </section>
+  <div class="experience" id="experience" aria-label="Recorrido por el álbum">
+    <header class="chrome">
+      <a href="#" class="monogram" aria-label="Volver a la portada">N<span>+</span>C</a>
+      <p>Un año<br>en recuerdos</p>
+      <button class="sound" type="button" id="motionToggle" aria-pressed="false">Pausar movimiento</button>
+    </header>
+    <div class="viewport" aria-hidden="true"><div class="depth-lines"></div><div class="world" id="world"></div></div>
+    <div class="story" id="story"></div>
+    <aside class="caption" aria-live="polite"><span id="monthNumber">01</span><div><h2 id="monthName">Enero</h2><p id="monthText"></p></div></aside>
+    <div class="progress" aria-hidden="true"><span>01</span><i><b id="progressBar"></b></i><span>12</span></div>
+    <p class="scroll-hint">Scroll para avanzar <span>↓</span></p>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
